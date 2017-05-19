@@ -62,5 +62,5 @@ Note: Windows users, at some point you may run into an error with the bcrypt gem
  1. Quickly pre-populate some data:
 
     ```
-    rake db:seed:characters
+    rails db:seed:characters
     ```
