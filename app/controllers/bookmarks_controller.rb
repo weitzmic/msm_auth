@@ -1,6 +1,16 @@
 class BookmarksController < ApplicationController
+  before_action :must_be_owner, :only => [:show, :edit, :update, :destroy]
+
+  def must_be_owner
+    b = Bookmark.find(params[:id])
+    if current_user.id != b.user_id
+      redirect_to root_url
+    end
+  end
+
   def index
-    @bookmarks = Bookmark.all
+    # @bookmarks = Bookmark.where(:user_id => current_user.id)
+    @bookmarks = current_user.bookmarks
 
     render("bookmarks/index.html.erb")
   end
@@ -26,7 +36,7 @@ class BookmarksController < ApplicationController
     save_status = @bookmark.save
 
     if save_status == true
-      redirect_to("/bookmarks/#{@bookmark.id}", :notice => "Bookmark created successfully.")
+      redirect_to("/movies/#{@bookmark.movie_id}", :notice => "Bookmark created successfully.")
     else
       render("bookmarks/new.html.erb")
     end

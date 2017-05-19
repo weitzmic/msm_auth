@@ -1,6 +1,33 @@
 <div class="page-header">
-  <h3>Movie #<%= @movie.id %></h3>
+  <h3>
+    Movie #<%= @movie.id %>
+  </h3>
 </div>
+
+<% bookmark = Bookmark.find_by({ :user_id => current_user.id, :movie_id => @movie.id }) %>
+<% if current_user.bookmarks.include?(bookmark) %>
+  <a href="/delete_bookmark/<%= bookmark.id %>">
+    Delete bookmark
+  </a>
+<% else %>
+  <form action="/create_bookmark" method="post">
+    <!-- Hidden input for authenticity token to protect from forgery -->
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+    <!-- Label and input for user_id -->
+
+    <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+
+    <!-- Label and input for movie_id -->
+
+    <input type="hidden" name="movie_id" value="<%= @movie.id %>">
+
+    <button class="btn btn-success">
+      Create Bookmark
+    </button>
+  </form>
+<% end %>
+
 
 <div class="row">
   <div class="col-md-12">
