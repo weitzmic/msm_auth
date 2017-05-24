@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
+gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
 
 gem 'kaminari'
 
